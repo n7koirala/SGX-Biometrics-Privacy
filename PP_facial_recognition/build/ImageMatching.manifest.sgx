@@ -1,0 +1,261 @@
+[libos]
+entrypoint = "/ImageMatching"
+
+[loader]
+log_level = "error"
+argv = [
+    "/ImageMatching",
+    "./test/2_15.dat",
+]
+
+[loader.env]
+LD_LIBRARY_PATH = "/lib:/lib64:/usr/lib:/usr/lib/x86_64-linux-gnu"
+
+[loader.entrypoint]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/libsysdb.so"
+sha256 = "d059db9ba33cea1174a8154615db486efd50946ef769783b1a48e6b0e23192e6"
+
+[fs]
+mounts = [
+    { path = "/lib", uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc" },
+    { path = "/ImageMatching", uri = "file:build/ImageMatching" },
+    { path = "/usr/lib/x86_64-linux-gnu", uri = "file:/usr/lib/x86_64-linux-gnu" },
+]
+
+[sgx]
+debug = false
+edmm_enable = false
+max_threads = 4
+isvprodid = 0
+isvsvn = 0
+remote_attestation = "none"
+enable_stats = false
+enclave_size = "256M"
+use_exinfo = false
+
+[[sgx.trusted_files]]
+uri = "file:build/ImageMatching"
+sha256 = "c6d8b2c6bf93353fb16fc5c04dfcc1396a8699043885686a22b90a4b6dbeabf1"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/crt1.o"
+sha256 = "d3bd1f01134bdf96b03784ccb62e8b739478cde42fee41fd612e7b7ddf1f9ae4"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/crti.o"
+sha256 = "2f1c31070d95f398fe4c1388408e83283cc7e0cee0ebb64882e0b331e8e178e8"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/crtn.o"
+sha256 = "2362e4c4b545ecb28cb23fa67ad539114482cd661ed8d5dff959eb8c97b4d769"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/ld-linux-x86-64.so.2"
+sha256 = "f6a3fbcaf073a59a4274f7ceeeab4c5b82d8f9b1c7589c6c3175f39a1827eccd"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/ld.so"
+sha256 = "f6a3fbcaf073a59a4274f7ceeeab4c5b82d8f9b1c7589c6c3175f39a1827eccd"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libanl.so"
+sha256 = "f1c80cba33f5b87e6e6751ba9c1f68c12ca44f821369e7089f6e599280ea4166"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libanl.so.1"
+sha256 = "f1c80cba33f5b87e6e6751ba9c1f68c12ca44f821369e7089f6e599280ea4166"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libc.so"
+sha256 = "7829a19fdddc40f97c6c6d0edaa4a986fda83822c4e772c960e695bb32bfb826"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libc.so.6"
+sha256 = "7829a19fdddc40f97c6c6d0edaa4a986fda83822c4e772c960e695bb32bfb826"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libdl.so"
+sha256 = "f63e78b2549b4f1b0e8a6771d17307ca4d3dece6c9510f6894e615b7377384b5"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libdl.so.2"
+sha256 = "f63e78b2549b4f1b0e8a6771d17307ca4d3dece6c9510f6894e615b7377384b5"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libm.so"
+sha256 = "cc6acdefcaf978ceaf66173ca7a750936c99124f2121e4214fecb9489e4b9603"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libm.so.6"
+sha256 = "cc6acdefcaf978ceaf66173ca7a750936c99124f2121e4214fecb9489e4b9603"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libmbedcrypto_gramine.a"
+sha256 = "7f25771c33641e3344506577d5a03e93d1eef3e783d01d1e17505b18b0bd2737"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libmbedcrypto_gramine.so"
+sha256 = "de751ad364edbbf9fff73d1da27f58d85ca7eae877a02b87ad068697fa49e01d"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libmbedcrypto_gramine.so.16"
+sha256 = "de751ad364edbbf9fff73d1da27f58d85ca7eae877a02b87ad068697fa49e01d"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libmbedtls_gramine.a"
+sha256 = "e8e1a37d98f0c028b91f3ed88f42e897d7cd79f540103f7d4077888a4cf6952c"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libmbedtls_gramine.so"
+sha256 = "c2e5c6406f5e9d2567eed1cc0b3daa1597a5222ca2e8f43c63858e3858dce2d5"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libmbedtls_gramine.so.21"
+sha256 = "c2e5c6406f5e9d2567eed1cc0b3daa1597a5222ca2e8f43c63858e3858dce2d5"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libmbedx509_gramine.a"
+sha256 = "4919a11dfa0e5ea7d5c9e32cb1d00f288d6c3afc09864940e25d42113fd7bd3d"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libmbedx509_gramine.so"
+sha256 = "806f282f551e62a010f99c30a883d14c786fae4e1920e2f7c9b9b1c6379b1ad9"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libmbedx509_gramine.so.7"
+sha256 = "806f282f551e62a010f99c30a883d14c786fae4e1920e2f7c9b9b1c6379b1ad9"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libmvec.so"
+sha256 = "51b5c3f4003bd06223e77af007cf29040b35ccaf1f3834b6b4d8fc15a079a8e8"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libmvec.so.1"
+sha256 = "51b5c3f4003bd06223e77af007cf29040b35ccaf1f3834b6b4d8fc15a079a8e8"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libnsl.so"
+sha256 = "e0b4c08dc7934aa4b3fc3040c6ba5e4017834501a43291877b7f36adb4ec816e"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libnsl.so.1"
+sha256 = "e0b4c08dc7934aa4b3fc3040c6ba5e4017834501a43291877b7f36adb4ec816e"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libnss_compat.so"
+sha256 = "14a05bb9ba7c0a4b2c707e3eb0eff0df9aff5d2383d3819dce137f564059f0ca"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libnss_compat.so.2"
+sha256 = "14a05bb9ba7c0a4b2c707e3eb0eff0df9aff5d2383d3819dce137f564059f0ca"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libnss_db.so"
+sha256 = "ea7f07d6fcd3141a7c34581cca90d73b9f25acd1253cfec5a33f69a1483ec8bd"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libnss_db.so.2"
+sha256 = "ea7f07d6fcd3141a7c34581cca90d73b9f25acd1253cfec5a33f69a1483ec8bd"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libnss_dns.so"
+sha256 = "3855fd947e3e61268170a991c72bce8486adc3ee34bf772ed9d1a036e0058f6b"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libnss_dns.so.2"
+sha256 = "3855fd947e3e61268170a991c72bce8486adc3ee34bf772ed9d1a036e0058f6b"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libnss_files.so"
+sha256 = "c26ab69c076ebf3d73cbcfd2f0d5aee786fdf03190f77025051e6358e9ec08a2"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libnss_files.so.2"
+sha256 = "c26ab69c076ebf3d73cbcfd2f0d5aee786fdf03190f77025051e6358e9ec08a2"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libpthread.so"
+sha256 = "c00feb21da30ed110d36766632ddd1254f2bf4217903981b2b93f705d4dfa043"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libpthread.so.0"
+sha256 = "c00feb21da30ed110d36766632ddd1254f2bf4217903981b2b93f705d4dfa043"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libra_tls_attest.so"
+sha256 = "da6a8d8fecc744e3bd7795d782c93b627b0668d34a96dc7fe18a44d4a4b0a277"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libra_tls_verify.a"
+sha256 = "b04b76dab605f6dd87177109a62160de44ff392e9ae853d7c56889a8c208c0bf"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libra_tls_verify_epid.so"
+sha256 = "366013a8e0ba743b1b0019bacc5d678ff36887753dab29dc3ce0264e96229f52"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libresolv.so"
+sha256 = "1000d10be255e52966186c70a0400fe994553a61fb5375561615abb144c057e3"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libresolv.so.2"
+sha256 = "1000d10be255e52966186c70a0400fe994553a61fb5375561615abb144c057e3"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/librt.so"
+sha256 = "a82117bcfddfbe63e29d8b80c5a440d535398565839e5c09d7cef2a1a551a2d0"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/librt.so.1"
+sha256 = "a82117bcfddfbe63e29d8b80c5a440d535398565839e5c09d7cef2a1a551a2d0"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libsecret_prov_attest.so"
+sha256 = "2a49a4ee19685a43c692397fdbf26030299bb41b4a1f865339fac8c77f4dffad"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libsecret_prov_verify.a"
+sha256 = "871015d0d2f9f788767fdededcec8f883c1487022b42d3080eb56648f9a0b448"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libsecret_prov_verify_epid.so"
+sha256 = "83c6905a4360548f3f9062a9a4e88405dba8f2b318498039fbc96807ef123c59"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libthread_db.so"
+sha256 = "95f6819b920f250053db16758d9586f21f5648f0fd6ed575d639ab8a93fe7dd0"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libthread_db.so.1"
+sha256 = "95f6819b920f250053db16758d9586f21f5648f0fd6ed575d639ab8a93fe7dd0"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libutil.so"
+sha256 = "e1ddfb1be1395c9f40ac4e04f306b78db8aaf2a67cca389e7d76c2acccfcf047"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/runtime/glibc/libutil.so.1"
+sha256 = "e1ddfb1be1395c9f40ac4e04f306b78db8aaf2a67cca389e7d76c2acccfcf047"
+
+[[sgx.trusted_files]]
+uri = "file:./test/2_15.dat"
+sha256 = "471224ece25c7f9b45e6c9f2c6f0e214d62f136154733a79af39ce9048140905"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
+sha256 = "41c4cd10be11160dec736958a59eb0553357ad77008e9ba56250d4fd8698b8ec"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+sha256 = "39c9bb846d8491ec41e89b7d34b824e7b6e7ff37d7b9de549305a15c2f7a6cf7"
+
+[[sgx.trusted_files]]
+uri = "file:/usr/local/lib/x86_64-linux-gnu/gramine/libsysdb.so"
+sha256 = "d059db9ba33cea1174a8154615db486efd50946ef769783b1a48e6b0e23192e6"
+
+[sgx.cpu_features]
+avx = "unspecified"
+avx512 = "unspecified"
+amx = "unspecified"
+mpx = "disabled"
+pkru = "disabled"

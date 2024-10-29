@@ -1,0 +1,52 @@
+key=b8f82ba3a0f49f3f6ade654931152f3bc762f0623d94a26b3349b5e97905fd58
+ChatGPT: openssl rand -hex 32
+Gramine: dd if=/dev/urandom of=files/wrap_key bs=16 count=1
+To get the key in hex: xxd -p ./sealing_code/wrap_key 
+
+Encryption command:
+gramine-sgx-pf-crypt encrypt -w ./wrap_key -i ../test/test_gallery_plaintext/6.xyt -o 6_enc.xyt
+
+
+
+
+Manifest File trusted version:
+
+# Copyright (C) 2023 Gramine contributors
+# SPDX-License-Identifier: BSD-3-Clause
+
+# FingerprintMatching manifest file example
+
+libos.entrypoint = "/FingerprintMatching"
+loader.log_level = "{{ log_level }}"
+
+loader.env.LD_LIBRARY_PATH = "/lib"
+
+# Add command-line argument handling
+loader.argv = [ "/FingerprintMatching", "-p", "{{ probe }}", "-G", "{{ gallery }}" ]
+
+fs.mounts = [
+  { path = "/lib", uri = "file:{{ gramine.runtimedir() }}" },
+  { path = "/FingerprintMatching", uri = "file:build/FingerprintMatching" }
+]
+
+# key_name = "/home/nkoirala/gramine_fingerprint/fingerprint_matching-main/sealing_code/wrap_key"
+# fs.insecure__keys.wrap_key = "502e1ea992c928a6a030c30b00ae0b09"
+
+sgx.debug = false
+sgx.edmm_enable = {{ 'true' if env.get('EDMM', '0') == '1' else 'false' }}
+
+sgx.seal_key.flags_mask = "0xffffffffffffffff"  # (default: "0xffffffffffffffff")
+sgx.seal_key.xfrm_mask  = "0xfffffffffff9ff1b"  # (default: "0xfffffffffff9ff1b")
+sgx.seal_key.misc_mask  = "0xffffffff"  # (default: "0xffffffff")
+
+sgx.trusted_files = [
+  "file:build/FingerprintMatching",
+  "file:{{ gramine.runtimedir() }}/",
+  "file:./test/probe.xyt",
+  "file:./gallery_list.lis",
+  "file:./test/test_gallery_plaintext/" ]
+
+sgx.allowed_files = ["file:./32_matches.txt",
+  "file:./similarity_pairs.txt" ]
+
+  

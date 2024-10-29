@@ -1,0 +1,1 @@
+make PROBE="./test/6.xyt" GALLERY="./test/6.xyt"

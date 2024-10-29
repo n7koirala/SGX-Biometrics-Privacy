@@ -1,0 +1,16 @@
+# ignore directories
+build
+obj
+bin
+test
+
+# ignore the output pictures
+tools/sim_output
+
+# ignore binaries and mak files
+tools/nbis/bozorth3/bin
+tools/nbis/mindtct/bin
+tools/**/*/*.o
+tools/**/*/p_rules.mak
+tools/**/*/rules.mak
+tools/install

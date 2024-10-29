@@ -1,0 +1,27 @@
+# ReceiverSender manifest file for Gramine SGX
+
+libos.entrypoint = "/ReceiverSender"
+loader.log_level = "{{ log_level }}"
+
+loader.env.LD_LIBRARY_PATH = "/lib:/lib64:/usr/lib:/usr/lib/x86_64-linux-gnu"
+
+# Pass the integer command-line argument
+loader.argv = [ "/ReceiverSender", "{{ num_senders }}" ]
+
+fs.mounts = [
+  { path = "/lib", uri = "file:{{ gramine.runtimedir() }}" },
+  { path = "/ReceiverSender", uri = "file:build/ReceiverSender" },
+  { path = "/usr/lib/x86_64-linux-gnu", uri = "file:/usr/lib/x86_64-linux-gnu" }
+]
+
+sgx.debug = false
+sgx.edmm_enable = {{ 'true' if env.get('EDMM', '0') == '1' else 'false' }}
+
+sgx.trusted_files = [
+  "file:build/ReceiverSender",
+  "file:{{ gramine.runtimedir() }}/",
+  "file:./receiver_query/receiver_set.txt",
+  "file:./sender_db/",
+  "file:/usr/lib/x86_64-linux-gnu/libstdc++.so.6",
+  "file:/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+]

@@ -1,0 +1,34 @@
+# ImageMatching manifest file for Gramine SGX
+
+libos.entrypoint = "/ImageMatching"
+loader.log_level = "{{ log_level }}"
+
+#loader.env.LD_LIBRARY_PATH = "/lib"
+loader.env.LD_LIBRARY_PATH = "/lib:/lib64:/usr/lib:/usr/lib/x86_64-linux-gnu"
+loader.argv = [ "/ImageMatching", "{{ dataset_filepath }}" ]
+
+
+
+# Add command-line argument handling
+# loader.argv = [ "/ImageMatching", "{{ dataset_filepath }}" ]
+
+fs.mounts = [
+  { path = "/lib", uri = "file:{{ gramine.runtimedir() }}" },
+  { path = "/ImageMatching", uri = "file:build/ImageMatching" },
+  { path = "/usr/lib/x86_64-linux-gnu", uri = "file:/usr/lib/x86_64-linux-gnu" },
+]
+
+sgx.debug = false
+sgx.edmm_enable = {{ 'true' if env.get('EDMM', '0') == '1' else 'false' }}
+
+# SGX sealing configurations (if needed)
+# sgx.seal_key.flags_mask = "0xffffffffffffffff"  # (default: "0xffffffffffffffff")
+# sgx.seal_key.xfrm_mask  = "0xfffffffffff9ff1b"  # (default: "0xfffffffffff9ff1b")
+# sgx.seal_key.misc_mask  = "0xffffffff"          # (default: "0xffffffff")
+
+sgx.trusted_files = [
+  "file:build/ImageMatching",
+  "file:{{ gramine.runtimedir() }}/",
+  "file:./test/2_15.dat",
+  "file:/usr/lib/x86_64-linux-gnu/libstdc++.so.6",
+  "file:/usr/lib/x86_64-linux-gnu/libgcc_s.so.1" ]
