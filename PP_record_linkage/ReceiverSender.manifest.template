@@ -14,11 +14,11 @@ fs.mounts = [
   { path = "/usr/lib/x86_64-linux-gnu", uri = "file:/usr/lib/x86_64-linux-gnu" }
 ]
 
-#sgx.debug = false
+sgx.debug = false
 sgx.edmm_enable = {{ 'true' if env.get('EDMM', '0') == '1' else 'false' }}
 
 # Profiling flags
-sgx.debug = true
+#sgx.debug = true
 #sgx.enable_stats = true
 #sgx.profile.enable = "all"
 #sgx.profile.with_stack = true

@@ -146,7 +146,7 @@ gramine-manifest-check build/ReceiverSender.manifest.sgx
 # Analysis using ```perf```
 
 1. **Install perf**: ([Installation Guide](https://gramine.readthedocs.io/en/stable/performance.html#perf))
-2. **Set flags**: Add the following in the manifest.template file: ```sgx.debug = false```
+2. **Set flags**: Add the following in the manifest.template file: ```sgx.debug = true```
 3. **Clean and make**: Clean and make again with ```DEBUG=1``` flag.
 
 ```
