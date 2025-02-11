@@ -2,7 +2,7 @@
 
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -Wall -std=c++17
+CXXFLAGS = -Wall -std=c++17 -Iinclude
 
 ifeq ($(DEBUG),1)
 GRAMINE_LOG_LEVEL = debug
@@ -16,27 +16,22 @@ endif
 TARGET = ReceiverSender
 
 # Source files
-SRCS = main.cpp
-
-# Build directories
-BUILD_DIR = build
-BIN_DIR = $(BUILD_DIR)
-LIB_DIR = lib
+SRCS = src/main.cpp src/aes_crypt.cpp  # Ensure correct path
+DEPS = include/aes_crypt.h             # Include header dependency
 
 # Default target
-all: $(BIN_DIR)/$(TARGET) $(BIN_DIR)/$(TARGET).manifest
+all: $(TARGET) $(TARGET).manifest
 
 ifeq ($(SGX),1)
-all: $(BIN_DIR)/$(TARGET).manifest.sgx $(BIN_DIR)/$(TARGET).sig
+all: $(TARGET).manifest.sgx $(TARGET).sig
 endif
 
 # Rule to build the target executable
-$(BIN_DIR)/$(TARGET): $(SRCS)
-	mkdir -p $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+$(TARGET): $(SRCS) $(DEPS)
+	$(CXX) $(CXXFLAGS) -o $@ $^ -lssl -lcrypto
 
 # Rule to build the manifest file
-$(BIN_DIR)/$(TARGET).manifest: $(TARGET).manifest.template
+$(TARGET).manifest: $(TARGET).manifest.template
 	gramine-manifest \
 		-Dlog_level=$(GRAMINE_LOG_LEVEL) \
 		-Dnum_senders="$(NUM_SENDERS)" \
@@ -44,11 +39,11 @@ $(BIN_DIR)/$(TARGET).manifest: $(TARGET).manifest.template
 	gramine-manifest-check $@
 
 # Rule to sign the manifest for SGX
-$(BIN_DIR)/$(TARGET).sig $(BIN_DIR)/$(TARGET).manifest.sgx: sgx_sign
+$(TARGET).sig $(TARGET).manifest.sgx: sgx_sign
 	@:
 
 .INTERMEDIATE: sgx_sign
-sgx_sign: $(BIN_DIR)/$(TARGET).manifest $(BIN_DIR)/$(TARGET)
+sgx_sign: $(TARGET).manifest $(TARGET)
 	gramine-sgx-sign \
 		--manifest $< \
 		--output $<.sgx
@@ -64,18 +59,18 @@ endif
 # Run the application with Gramine
 .PHONY: run
 run: all
-	$(GRAMINE) $(BIN_DIR)/$(TARGET)
+	$(GRAMINE) ./$(TARGET)
 
 # Run the application with Gramine and specify number of senders
 .PHONY: run-with-senders
 run-with-senders: all
-	$(GRAMINE) $(BIN_DIR)/$(TARGET) "$(NUM_SENDERS)"
+	$(GRAMINE) ./$(TARGET) "$(NUM_SENDERS)"
 
 # Clean up build files
 .PHONY: clean
 clean:
 	rm -f *.token *.sig *.manifest.sgx *.manifest
-	rm -rf $(BUILD_DIR) $(LIB_DIR)
+	rm -f $(TARGET)
 
 # Phony targets
 .PHONY: all

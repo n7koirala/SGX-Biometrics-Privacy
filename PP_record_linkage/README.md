@@ -1,5 +1,20 @@
 # **Privacy-Preserving Record Linkage with Intel SGX via Gramine**
 
+## Project Structure: 
+```
+│── /src/                # Source files
+│   ├── main.cpp         # Main program 
+│   ├── aes_crypt.cpp    # AES encryption & decryption implementation
+│   ├── encrypt_receiver.cpp  # Encrypts receiver query before main runs
+│   ├── create_sender_db.cpp  # Creates sender dataset
+│── /include/            # Header files
+│   ├── aes_crypt.h      # AES function declarations
+│── /aes_keys/           # Folder to store AES key & IV files
+│── /enc_receiver_query/ # Stores encrypted receiver query file
+│── /sender_db/          # Stores sender dataset
+│── Makefile             # Automates compilation
+```
+
 This repository demonstrates a simple **record linkage** application that can run either:
 - **Inside an Intel SGX Enclave** (using [Gramine](https://gramineproject.io/) in SGX mode), or
 - **Outside the Enclave** in a normal Linux environment (using Gramine Direct).
