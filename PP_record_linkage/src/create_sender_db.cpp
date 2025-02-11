@@ -5,9 +5,8 @@
 #include <ctime>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include "file_paths.h"
 
-const std::string SENDER_FOLDER = "sender_db/";
-const std::string SENDER_FILE = "sender_db/sender_set.txt";
 
 void generate_sender_set(int num_records) {
     // Create sender_db directory if it doesn't exist

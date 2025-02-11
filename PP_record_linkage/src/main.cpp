@@ -14,12 +14,7 @@
 #include <openssl/evp.h>
 #include <cstring> 
 #include "aes_crypt.h"
-
-const std::string SENDER_FILE = "sender_db/sender_set.txt";  // Single sender set file
-const std::string ENC_RECEIVER_FILE = "enc_receiver_query/receiver_set.enc";
-const std::string AES_KEY_FILE = "aes_keys/aes_key.bin";
-const std::string AES_IV_FILE = "aes_keys/aes_iv.bin";
-const std::string ENC_RESULT_FILE = "result/enc_result.enc";  // Encrypted result output file
+#include "file_paths.h"
 
 // Function to read and decrypt the receiver query
 bool decrypt_receiver_query(uint32_t& receiver_value) {
@@ -63,8 +58,8 @@ bool decrypt_receiver_query(uint32_t& receiver_value) {
     std::memcpy(&receiver_value, decrypted_data.data(), sizeof(uint32_t));
 
     // Print results
-    std::cout << "Decrypted 32-bit Hash Value: " << receiver_value << std::endl;
-    std::cout << "Decryption Time: " << decryption_time.count() << " ms" << std::endl;
+    std::cout << receiver_value << " ";
+    std::cout << decryption_time.count() << " ";
 
     return true;
 }
@@ -108,9 +103,14 @@ bool encrypt_result(bool found) {
     enc_file.close();
 
     // Print encryption details
+    /*
     std::cout << "Encrypted Boolean Result: " << static_cast<int>(result_value) << std::endl;
     std::cout << "Encryption Time: " << encryption_time.count() << " ms" << std::endl;
     std::cout << "Ciphertext Size: " << ciphertext.size() << " bytes\n";
+    */
+
+    std::cout <<  encryption_time.count() << " ";
+    std::cout << ciphertext.size() << std::endl;
 
     return true;
 }
@@ -161,9 +161,9 @@ int main() {
     std::cout << elapsed.count();
 
     if (found) {
-        std::cout << " 1" << std::endl;
+        std::cout << " 1" << " ";
     } else {
-        std::cout << " 0" << std::endl;
+        std::cout << " 0" << " ";
     }
 
     // Encrypt and save the result

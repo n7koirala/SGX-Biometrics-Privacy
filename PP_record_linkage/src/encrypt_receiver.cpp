@@ -11,11 +11,7 @@
 #include <sys/types.h>
 #include <cstring>  // Required for memcpy
 #include "aes_crypt.h"
-
-const std::string RECEIVER_FILE = "receiver_query/receiver_set.txt";
-const std::string ENCRYPTED_FILE = "enc_receiver_query/receiver_set.enc";
-const std::string AES_KEY_FILE = "aes_keys/aes_key.bin";
-const std::string AES_IV_FILE = "aes_keys/aes_iv.bin";
+#include "file_paths.h"
 
 
 // Function to create directories if they don't exist
@@ -78,11 +74,16 @@ void encrypt_receiver_query() {
     write_encrypted_file(ciphertext, iv);
 
     // Print results
+    /*
     std::cout << "Original Data: " << person_info << std::endl;
     std::cout << "32-bit Hashed Value: " << hashed_value << std::endl;
     std::cout << "AES Key and IV have been saved in aes_keys/ directory.\n";
     std::cout << "Ciphertext Size: " << ciphertext.size() << " bytes" << std::endl;
     std::cout << "Encryption Time: " << encryption_time.count() << " ms" << std::endl;
+    */
+    std::cout << hashed_value << " ";
+    std::cout << ciphertext.size() << " ";
+    std::cout << encryption_time.count() << std::endl;
 }
 
 int main() {
