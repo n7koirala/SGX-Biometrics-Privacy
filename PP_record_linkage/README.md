@@ -10,9 +10,10 @@
 │── /include/            # Header files
 │   ├── aes_crypt.h      # AES function declarations
 │── /aes_keys/           # Folder to store AES key & IV files
+│── /scripts/            # Scripts for running experiments
+│── /data/               # Results of experimental runs
 │── /enc_receiver_query/ # Stores encrypted receiver query file
-│── /sender_db/          # Stores sender dataset
-│── Makefile             # Automates compilation
+│── /sender_db/          # Stores sender dataset          
 ```
 
 This repository demonstrates a simple **record linkage** application that can run either:
