@@ -112,7 +112,7 @@ gramine-sgx ./ImageMatching
 ```ImageMatching.manifest.template```: A template that Gramine uses to generate the final ```.manifest``` and ```.manifest.sgx```.
 
 It includes paths to the application binary and libraries it depends on.
-The Makefile automatically replaces variables like ```{{ log_level }}``` and ```{{ num_senders }}``` with values provided during build.
+The Makefile automatically replaces variables like ```{{ log_level }}``` and ```{{ dataset_filepath }}``` with values provided during build.
 
 
 
