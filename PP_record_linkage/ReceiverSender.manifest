@@ -5,7 +5,6 @@ entrypoint = "/ReceiverSender"
 log_level = "error"
 argv = [
     "/ReceiverSender",
-    "",
 ]
 
 [loader.env]
@@ -56,7 +55,7 @@ use_exinfo = false
 
 [[sgx.trusted_files]]
 uri = "file:build/ReceiverSender"
-sha256 = "76c58cbc32398f1e10bbe34b9bf865ef956538c443037ac4ac94dd31d338aca3"
+sha256 = "b03a85265c957856fa5d2739b8ab93fc1c58c9d35ee4721951178a715a340797"
 
 [[sgx.trusted_files]]
 uri = "file:/usr/lib/x86_64-linux-gnu/gramine/runtime/glibc/crt1.o"
@@ -272,19 +271,19 @@ sha256 = "3583ff82a675adb99acce899a18ec75508478103b436f28cf94a407d7d80e409"
 
 [[sgx.trusted_files]]
 uri = "file:./enc_receiver_query/receiver_set.enc"
-sha256 = "5dfe27c5b40832ce749489528def24c49b831870170a57202eda3bebebb00604"
+sha256 = "4eae03229c69d2633986da60d510abe45e7e1cfae6b5e5915b850eb03fd07fa5"
 
 [[sgx.trusted_files]]
 uri = "file:sender_db/sender_set.txt"
-sha256 = "5e737863b38e2fcc853d26409d059178099559477cdc857a51726b59556e4ef8"
+sha256 = "038c13f0bdb7948c08adc8fba0d2c4481cfbdd0a365df54cace0b0551e58ed27"
 
 [[sgx.trusted_files]]
 uri = "file:aes_keys/aes_iv.bin"
-sha256 = "2c93b3edb7c5fed57ca2befa00017bffcc0f15e17620d36b851a0fe7e5293629"
+sha256 = "dc880a5ef00d19b951ae1cc94c4441d7b200c40c2a7ea63cc58a1ee2758183a7"
 
 [[sgx.trusted_files]]
 uri = "file:aes_keys/aes_key.bin"
-sha256 = "9cc98e475a669051b9a2e10ecbf91f5a5fee331e8840ba8079870d48ef454362"
+sha256 = "ed0ee49e43bf0bcdc22c3e36ddf7f6a61a5d3eeac64c3863f913df3d8ae5b2aa"
 
 [[sgx.trusted_files]]
 uri = "file:/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
