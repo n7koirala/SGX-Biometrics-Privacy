@@ -9,6 +9,7 @@
 │   ├── create_sender_db.cpp  # Creates sender dataset
 │── /include/            # Header files
 │   ├── aes_crypt.h      # AES function declarations
+│   ├── file_paths.h 
 │── /aes_keys/           # Folder to store AES key & IV files
 │── /scripts/            # Scripts for running experiments
 │── /data/               # Results of experimental runs
@@ -24,16 +25,18 @@ This repository demonstrates a simple **record linkage** application that can ru
 
 ## **Overview**
 
-1. **`create_sender_db.cpp`**: Creates simulated “sender” databases. Each sender has a set of random integer records.  
-2. **`main.cpp`**: Loads one record from the “receiver” file and checks if this record exists in any of the “sender” databases.
-3. **`ReceiverSender.manifest.template`**: A template used by Gramine to build the final manifest files.  
-4. **`Makefile`**: Automates compilation and signing tasks for both SGX and non-SGX modes.
+1. **`create_sender_db.cpp`**: Creates simulated “sender” database. Sender has a set of random 32-bit integer records.  
+2. **`encrypt_receiver.cpp`**: Generates the AES keys and the encrypted receiver query ciphertext.  
+3. **`main.cpp`**: Loads one record from the “receiver” file and checks if this record exists in the “sender” database.
+4. **`ReceiverSender.manifest.template`**: A template used by Gramine to build the final manifest files.  
+5. **`Makefile`**: Automates compilation and signing tasks for both SGX and non-SGX modes.
 
 ## **Prerequisites**
 
 1. **Intel SGX Driver/Platform Software (PSW)** installed on your system.  
 2. **Gramine** installed on your system. ([Installation Guide](https://gramine.readthedocs.io/en/latest/))
 3. **GCC / G++** (or a similar C++ compiler) for building the code.  
+4. **AES Encryption Support*** OpenSSL and crypto libraries required for AES-based encryption.
 
 **Optional**: If you do not have SGX hardware, you can still run in non-SGX mode (`gramine-direct`).
 
@@ -49,27 +52,48 @@ cd PP_record_linkage
 ```
 
 
-## 2. Create Sender Databases
+## 2. Create Sender Database
 
-Compile and run the script that generates the sender sets:
+Compile and run the program that generates the sender set and use ```-Iinclude``` flag to include the necessary files under ```include```  :
 
 ```
-g++ create_sender_db.cpp -o create_sender_db
+g++ -o ./bin/create_sender_db ./src/create_sender_db.cpp -Iinclude -std=c++17
 ```
 
-# Run to generate sender databases, e.g., 8 senders
+### Run to generate sender databases, e.g., 1024 records
 ```
-./create_sender_db 8
+./bin/create_sender_db 1024
+```
+
+## 3. Generate AES keys and Run Receiver Program
+
+Compile and run the program to generate encrypted receiver query ciphertext and AES-CTR keys:
+
+```
+g++ -o ./bin/encrypt_receiver ./src/encrypt_receiver.cpp ./src/aes_crypt.cpp -Iinclude -lssl -lcrypto -std=c++17
+```
+
+### Run to generate the query ciphertext
+```
+./bin/encrypt_receiver
+```
+
+## 4. Build and Run the Record Linkage Application
+
+To simply make and run the plain application:
+
+```
+g++ -o ./bin/main ./src/main.cpp ./src/aes_crypt.cpp -Iinclude -lssl -lcrypto -std=c++17
+./bin/main
 ```
 
 
-## 3. Build and Run the Record Linkage Application
-## 3.1. Non-SGX (Gramine Direct)
+## 4.1. Non-SGX (Gramine Direct)
 
 Build the application (this compiles main.cpp and generates a manifest):
 
 ```
-make NUM_SENDERS=8
+make
 ```
 
 Run the application in non-SGX mode:
@@ -77,8 +101,6 @@ Run the application in non-SGX mode:
 ```
 gramine-direct ./build/ReceiverSender
 ```
-
-Output: The application will print whether the “receiver” value is found in any of the sender sets:
 
 ## 3.2. SGX Mode (Gramine SGX)
 Clean the previous build:
@@ -89,7 +111,7 @@ make clean
 
 Build for SGX:
 ```
-make SGX=1 NUM_SENDERS=8
+make SGX=1
 ```
 
 This creates:
@@ -102,10 +124,8 @@ This creates:
 Run in SGX mode:
 
 ```
-gramine-sgx ./build/ReceiverSender
+gramine-sgx ./ReceiverSender
 ```
-
-Output: Similar to the non-SGX mode, it will print whether the receiver’s record exists in any sender database.
 
 
 # Manifest File Explanation
