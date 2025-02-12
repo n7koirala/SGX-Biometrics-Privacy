@@ -16,10 +16,11 @@ endif
 TARGET = ImageMatching
 
 # Source files
-SRCS = src/main.cpp src/vector_utils.cpp
+SRCS = src/main.cpp src/vector_utils.cpp src/aes_crypt.cpp
+DEPS = include/aes_crypt.h include/file_paths.h include/config.h # Adjust as needed
 
-# Default dataset filepath (can be overridden)
-DATASET_FILEPATH = ""
+# Default dataset filepath (must be provided)
+DATASET_FILEPATH ?= 
 
 # Build directories
 BUILD_DIR = build
@@ -33,12 +34,16 @@ all: $(BIN_DIR)/$(TARGET).manifest.sgx $(BIN_DIR)/$(TARGET).sig
 endif
 
 # Rule to build the target executable
-$(BIN_DIR)/$(TARGET): $(SRCS)
+$(BIN_DIR)/$(TARGET): $(SRCS) $(DEPS)
 	mkdir -p $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) -o $@ $(SRCS)
+	$(CXX) $(CXXFLAGS) -o $@ $(SRCS) -lssl -lcrypto
 
 # Rule to build the manifest file
 $(BIN_DIR)/$(TARGET).manifest: ImageMatching.manifest.template
+	@if [ -z "$(DATASET_FILEPATH)" ]; then \
+		echo "Error: DATASET_FILEPATH is required. Run 'make DATASET_FILEPATH=your_file'"; \
+		exit 1; \
+	fi
 	gramine-manifest \
 		-Dlog_level=$(GRAMINE_LOG_LEVEL) \
 		-Ddataset_filepath=$(DATASET_FILEPATH) \
@@ -63,14 +68,19 @@ else
 GRAMINE = gramine-sgx
 endif
 
-# Run the application with Gramine
+# Prevent running without dataset argument
 .PHONY: run
-run: all
-	$(GRAMINE) $(BIN_DIR)/$(TARGET)
+run:
+	@echo "Error: Dataset filepath required. Use 'make DATASET_FILEPATH=your_file'"
+	@exit 1
 
 # Run the application with Gramine and the dataset filepath
 .PHONY: run-with-dataset
 run-with-dataset: all
+	@if [ -z "$(DATASET_FILEPATH)" ]; then \
+		echo "Error: DATASET_FILEPATH is required. Use 'make DATASET_FILEPATH=your_file'"; \
+		exit 1; \
+	fi
 	$(GRAMINE) $(BIN_DIR)/$(TARGET) "$(DATASET_FILEPATH)"
 
 # Clean up build files

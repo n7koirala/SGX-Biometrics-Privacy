@@ -16,6 +16,9 @@ fs.mounts = [
   { path = "/lib", uri = "file:{{ gramine.runtimedir() }}" },
   { path = "/ImageMatching", uri = "file:build/ImageMatching" },
   { path = "/usr/lib/x86_64-linux-gnu", uri = "file:/usr/lib/x86_64-linux-gnu" },
+  { path = "/usr/lib/x86_64-linux-gnu/libcrypto.so.3", uri = "file:/usr/lib/x86_64-linux-gnu/libcrypto.so.3" },
+  { path = "/usr/lib/x86_64-linux-gnu/libssl.so.3", uri = "file:/usr/lib/x86_64-linux-gnu/libssl.so.3" },
+  { path = "/result", uri = "file:./result", type = "chroot" } 
 ]
 
 sgx.debug = false
@@ -29,6 +32,17 @@ sgx.edmm_enable = {{ 'true' if env.get('EDMM', '0') == '1' else 'false' }}
 sgx.trusted_files = [
   "file:build/ImageMatching",
   "file:{{ gramine.runtimedir() }}/",
-  "file:./test/2_15.dat",
+  "file:./test/",
+  "file:./enc_receiver_query/receiver_set.enc",
+  "file:./aes_keys/",
   "file:/usr/lib/x86_64-linux-gnu/libstdc++.so.6",
-  "file:/usr/lib/x86_64-linux-gnu/libgcc_s.so.1" ]
+  "file:/usr/lib/x86_64-linux-gnu/libgcc_s.so.1", 
+  "file:/usr/lib/x86_64-linux-gnu/libcrypto.so.3",
+  "file:/usr/lib/x86_64-linux-gnu/libssl.so.3"
+
+]
+
+
+sgx.allowed_files = [
+  "file:./result/"
+]

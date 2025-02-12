@@ -3,6 +3,16 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <iomanip>
+#include <chrono>
+#include <openssl/aes.h>
+#include <openssl/rand.h>
+#include <openssl/evp.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <cstring>  // Required for memcpy
+#include "aes_crypt.h"
+#include "file_paths.h"
 #include <cmath>
 
 // Dimension of template vectors taken from dataset
