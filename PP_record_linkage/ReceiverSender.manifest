@@ -271,19 +271,19 @@ sha256 = "3583ff82a675adb99acce899a18ec75508478103b436f28cf94a407d7d80e409"
 
 [[sgx.trusted_files]]
 uri = "file:./enc_receiver_query/receiver_set.enc"
-sha256 = "4eae03229c69d2633986da60d510abe45e7e1cfae6b5e5915b850eb03fd07fa5"
+sha256 = "e20333ff88572ef4df35064df39556073dce27b0acef882cc9791a5248886e6f"
 
 [[sgx.trusted_files]]
 uri = "file:sender_db/sender_set.txt"
-sha256 = "038c13f0bdb7948c08adc8fba0d2c4481cfbdd0a365df54cace0b0551e58ed27"
+sha256 = "abf3a0bc46a6f2c2d82fa56bba7a339978cf00c12d8ae6526144aea0672a3b76"
 
 [[sgx.trusted_files]]
 uri = "file:aes_keys/aes_iv.bin"
-sha256 = "dc880a5ef00d19b951ae1cc94c4441d7b200c40c2a7ea63cc58a1ee2758183a7"
+sha256 = "336c7b396128d99da230741ef45bf8f3db10a0ff04a2eaec0c7d65a5e323ddeb"
 
 [[sgx.trusted_files]]
 uri = "file:aes_keys/aes_key.bin"
-sha256 = "ed0ee49e43bf0bcdc22c3e36ddf7f6a61a5d3eeac64c3863f913df3d8ae5b2aa"
+sha256 = "53d7fb589043c3f33c521afbe31aa85f51f70d89438b01844d89c9bd4af9754c"
 
 [[sgx.trusted_files]]
 uri = "file:/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
