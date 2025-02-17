@@ -12,7 +12,7 @@
 │   ├── file_paths.h 
 │── /aes_keys/           # Folder to store AES key & IV files
 │── /scripts/            # Scripts for running experiments
-│── /data/               # Results of experimental runs
+│── /data/               # Results of experimental runs and charts
 │── /enc_receiver_query/ # Stores encrypted receiver query file
 │── /sender_db/          # Stores sender dataset          
 ```
@@ -30,6 +30,7 @@ This repository demonstrates a simple **record linkage** application that can ru
 3. **`main.cpp`**: Loads one record from the “receiver” file and checks if this record exists in the “sender” database.
 4. **`ReceiverSender.manifest.template`**: A template used by Gramine to build the final manifest files.  
 5. **`Makefile`**: Automates compilation and signing tasks for both SGX and non-SGX modes.
+6. **`record_linkage_charts.ipynb`**: Generates charts for the data under `/data` folder.
 
 ## **Prerequisites**
 

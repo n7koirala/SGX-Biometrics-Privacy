@@ -14,6 +14,7 @@ This repository demonstrates a **Facial Recognition** application that can run e
 3. **`src/receiver_encrypt.cpp`**: Creates reciever's query ciphertext and generate AES-related keys.
 4. **`ImageMatching.manifest.template`**: A template used by Gramine to build the final manifest files.  
 5. **`Makefile`**: Automates compilation and signing tasks for both SGX and non-SGX modes.
+6. 6. **`facial_recognition_charts.ipynb`**: Generates charts for the data under `/data` folder.
 
 ## **Prerequisites**
 
