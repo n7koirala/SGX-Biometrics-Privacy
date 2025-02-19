@@ -1,0 +1,45 @@
+# ReceiverSender manifest file for Gramine SGX with automatic decryption inside enclave with a wrap key
+
+libos.entrypoint = "/ReceiverSender"
+loader.log_level = "{{ log_level }}"
+
+loader.env.LD_LIBRARY_PATH = "/lib:/lib64:/usr/lib:/usr/lib/x86_64-linux-gnu"
+
+# Pass the integer command-line argument
+loader.argv = [ "/ReceiverSender" ]
+
+fs.mounts = [
+  { type = "encrypted", path = "/enc_receiver_query",  uri  = "file:enc_receiver_query", key_name = "my_wrap_keyfile" },
+  { type = "encrypted", path = "/enc_sender_db",  uri  = "file:enc_sender_db", key_name = "my_wrap_keyfile" },
+  { path = "/lib", uri = "file:{{ gramine.runtimedir() }}" },
+  { path = "/ReceiverSender", uri = "file:build/ReceiverSender" },
+  { path = "/usr/lib/x86_64-linux-gnu", uri = "file:/usr/lib/x86_64-linux-gnu" }
+]
+
+# Provide the wrap key file in the manifest
+# For DEVELOPMENT ONLY:
+# This method can be used to encrypt the files with a wrap key and the files will be automatically decrypted when read inside the enclave
+# to generate the key: gramine-sgx-pf-crypt gen-key --wrap-key wrap_key
+# to get the hex: dd if=/dev/urandom bs=16 count=1 of=wrap_key && hd wrap_key
+# to encrypt the files: gramine-sgx-pf-crypt encrypt -w my_wrap_keyfile -i sender_db/sender_set_1.txt -o enc_sender_db/sender_set_1.txt
+# follow this discussion: https://github.com/gramineproject/gramine/discussions/2096
+
+fs.insecure__keys.my_wrap_keyfile = "1fcf4fae5a0e6f78d20564371a580777"
+
+sgx.debug = false
+sgx.edmm_enable = {{ 'true' if env.get('EDMM', '0') == '1' else 'false' }}
+
+# Profiling flags
+#sgx.debug = true
+#sgx.enable_stats = true
+#sgx.profile.enable = "all"
+#sgx.profile.with_stack = true
+
+sgx.trusted_files = [
+  "file:build/ReceiverSender",
+  "file:{{ gramine.runtimedir() }}/",
+  "file:/usr/lib/x86_64-linux-gnu/libstdc++.so.6",
+  "file:/usr/lib/x86_64-linux-gnu/libgcc_s.so.1"
+]
+
+
